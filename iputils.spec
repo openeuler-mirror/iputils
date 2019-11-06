@@ -1,6 +1,6 @@
 Name:            iputils
-Version:         20190515
-Release:         2
+Version:         20190709
+Release:         1
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -12,8 +12,10 @@ Source3:         ninfod.service
 Source4:         bsd.txt
 Source5:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
-Patch001:        0001-build-sys-doc-Fix-the-dependency-on-xsltproc.patch
 Patch100:        iputils-ifenslave.patch
+
+Patch6000:       0001-iputils-arpings.patch
+Patch6001:       0002-iputils-arpings-count.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -35,8 +37,9 @@ the target machine is alive and receiving network traffic.
 %setup -q -a 1 -n %{name}-s%{version}
 cp %{SOURCE4} %{SOURCE5} .
 
-%patch001 -p1
-%patch100 -p1
+%patch100  -p1
+%patch6000 -p1
+%patch6001 -p1
 
 %build
   export CFLAGS="-fpie"
@@ -91,6 +94,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Wed Oct 9 2019 openEuler Buildteam <buildteam@openeuler.org> - 20190709-1
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:bugfix the arping and ping6
+
 * Mon Sep 30 2019 openEuler Buildteam <buildteam@openeuler.org> - 20190515-2
 - Type:bugfix
 - Id:NA
