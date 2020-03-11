@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         1
+Release:         2
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -16,6 +16,7 @@ Patch100:        iputils-ifenslave.patch
 
 Patch6000:       0001-iputils-arpings.patch
 Patch6001:       0002-iputils-arpings-count.patch
+Patch9000:       bugfix-arping-w-does-not-take-effect.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -40,6 +41,7 @@ cp %{SOURCE4} %{SOURCE5} .
 %patch100  -p1
 %patch6000 -p1
 %patch6001 -p1
+%patch9000 -p1
 
 %build
   export CFLAGS="-fpie"
@@ -94,6 +96,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Wed Mar 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 20190709-2
+- Type:bigfix
+- Id:NA
+- SUG:NA
+- DESC:bugfix the arping
+
 * Wed Oct 9 2019 openEuler Buildteam <buildteam@openeuler.org> - 20190709-1
 - Type:bugfix
 - Id:NA
