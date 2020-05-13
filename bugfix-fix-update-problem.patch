@@ -1,0 +1,45 @@
+From 4d7fb5a623a8c90007797244186d9c6654ad5056 Mon Sep 17 00:00:00 2001
+From: liaichun <liaichun@huawei.com>
+Date: Thu, 23 Apr 2020 15:15:58 +0800
+Subject: [PATCH] bugfix-fix-update-problem
+
+---
+ ninfod/ninfod.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/ninfod/ninfod.c b/ninfod/ninfod.c
+index badbf80..48bcdd4 100644
+--- a/ninfod/ninfod.c
++++ b/ninfod/ninfod.c
+@@ -454,7 +454,7 @@ static void do_daemonize(void)
+ /* --------- */
+ #ifdef HAVE_LIBCAP
+ static const cap_value_t cap_net_raw = CAP_NET_RAW;
+-static const cap_value_t cap_setuid =  CAP_SETUID; 
++static const cap_value_t cap_net_setuid =  CAP_SETUID; 
+ static cap_flag_value_t cap_ok;
+ #else
+ static uid_t euid;
+@@ -486,7 +486,7 @@ static void limit_capabilities(void)
+ 
+ 	cap_get_flag(cap_cur_p, CAP_SETUID, CAP_PERMITTED, &cap_ok);
+ 	if (cap_ok != CAP_CLEAR)
+-		cap_set_flag(cap_p, CAP_PERMITTED, 1, &cap_setuid, CAP_SET);
++		cap_set_flag(cap_p, CAP_PERMITTED, 1, &cap_net_setuid, CAP_SET);
+ 
+ 	if (cap_set_proc(cap_p) < 0) {
+ 		DEBUG(LOG_ERR, "cap_set_proc: %s\n", strerror(errno));
+@@ -519,8 +519,8 @@ static void drop_capabilities(void)
+ 
+ 	/* setuid / setuid */
+ 	if (cap_ok != CAP_CLEAR) {
+-		cap_set_flag(cap_p, CAP_PERMITTED, 1, &cap_setuid, CAP_SET);
+-		cap_set_flag(cap_p, CAP_EFFECTIVE, 1, &cap_setuid, CAP_SET);
++		cap_set_flag(cap_p, CAP_PERMITTED, 1, &cap_net_setuid, CAP_SET);
++		cap_set_flag(cap_p, CAP_EFFECTIVE, 1, &cap_net_setuid, CAP_SET);
+ 
+ 		if (cap_set_proc(cap_p) < 0) {
+ 			DEBUG(LOG_ERR, "cap_set_proc: %s\n", strerror(errno));
+-- 
+2.19.1
+
