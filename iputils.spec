@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         2
+Release:         4
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -16,7 +16,10 @@ Patch100:        iputils-ifenslave.patch
 
 Patch6000:       0001-iputils-arpings.patch
 Patch6001:       0002-iputils-arpings-count.patch
-Patch9000:       bugfix-arping-w-does-not-take-effect.patch
+
+Patch9000:       bugfix-fix-ping-dead-loop.patch
+Patch9001:       bugfix-arping-w-does-not-take-effect.patch
+Patch9002:       bugfix-fix-update-problem.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -42,6 +45,8 @@ cp %{SOURCE4} %{SOURCE5} .
 %patch6000 -p1
 %patch6001 -p1
 %patch9000 -p1
+%patch9001 -p1
+%patch9002 -p1
 
 %build
   export CFLAGS="-fpie"
@@ -96,11 +101,23 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
-* Wed Mar 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 20190709-2
-- Type:bigfix
+* Thu Apr 23 2020 liaichun <liaichun@huawei.com> - 20190709-4
+- Type:bugfix
 - Id:NA
 - SUG:NA
-- DESC:bugfix the arping
+- DESC: fix update problem
+
+* Sat Mar 7 2020 liuzhikang <liuzhikang3@huawei.com> - 20190709-3
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:fix arping parameter -w does not take effect
+
+* Tue Mar 3 2020 liuzhikang <liuzhikang3@huawei.com> - 20190709-2
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:update patches
 
 * Wed Oct 9 2019 openEuler Buildteam <buildteam@openeuler.org> - 20190709-1
 - Type:bugfix

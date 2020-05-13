@@ -1,0 +1,27 @@
+From 1dffabbdf5bafbd0bcea3858d83d46e40bf03261 Mon Sep 17 00:00:00 2001
+From: Chunmei Xu <xuchunmei@huawei.com>
+Date: Tue, 3 Mar 2020 20:44:33 +0800
+Subject: [PATCH] iputils fix ping dead loop
+
+---
+ ping_common.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/ping_common.c b/ping_common.c
+index 9fbaf9d..466e3fa 100644
+--- a/ping_common.c
++++ b/ping_common.c
+@@ -375,6 +375,10 @@ int pinger(ping_func_set_st *fset, socket_st *sock)
+ 		struct timeval tv;
+ 
+ 		gettimeofday(&tv, NULL);
++		if (tv.tv_sec < cur_time.tv_sec) {
++			gettimeofday(&cur_time, NULL);
++			gettimeofday(&tv, NULL);
++		}
+ 		ntokens = (tv.tv_sec - cur_time.tv_sec) * 1000 +
+ 			  (tv.tv_usec - cur_time.tv_usec) / 1000;
+ 		if (!interval) {
+-- 
+2.19.1
+
