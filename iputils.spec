@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         2
+Release:         3
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -96,8 +96,14 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Mon May 18 2020 openEuler Buildteam <buildteam@openeuler.org> - 20190709-3
+- Type:bugfix
+- Id:NA
+- SUG:restart
+- DESC:bugfix arping's exit code for -U/A
+
 * Wed Mar 11 2020 openEuler Buildteam <buildteam@openeuler.org> - 20190709-2
-- Type:bigfix
+- Type:bugfix
 - Id:NA
 - SUG:NA
 - DESC:bugfix the arping
