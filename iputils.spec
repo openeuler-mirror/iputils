@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         4
+Release:         5
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -101,6 +101,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Fri May 22 2020 liaichun <liaichun@huawei.com> - 20190709-5
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC: fix arping's exit code for -U/A
+
 * Thu Apr 23 2020 liaichun <liaichun@huawei.com> - 20190709-4
 - Type:bugfix
 - Id:NA
