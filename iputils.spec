@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         4
+Release:         5
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -17,6 +17,7 @@ Patch0002:       0001-iputils-arpings.patch
 Patch0003:       0002-iputils-arpings-count.patch
 Patch0004:       bugfix-arping-w-does-not-take-effect.patch
 Patch0005:       0003-ninfod-change-variable-name-to-avoid-colliding.patch
+Patch6000: 86ed08936d49e2c81ef49dfbd02aca1c74d0c098.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -97,6 +98,9 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* 20201103053007654140 patch-tracking 20190709-5
+- append patch file of upstream repository from <86ed08936d49e2c81ef49dfbd02aca1c74d0c098> to <86ed08936d49e2c81ef49dfbd02aca1c74d0c098>
+
 * Tue Jul 07 2020 gaihuiying <gaihuiying1@huawei.com> - 20190709-4
 - Type:bugfix
 - Id:NA
