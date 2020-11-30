@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         5
+Release:         6
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -18,6 +18,9 @@ Patch0003:       0002-iputils-arpings-count.patch
 Patch0004:       bugfix-arping-w-does-not-take-effect.patch
 Patch0005:       0003-ninfod-change-variable-name-to-avoid-colliding.patch
 Patch6000: 86ed08936d49e2c81ef49dfbd02aca1c74d0c098.patch
+Patch6001: 2583fb77dd57c5183998177a3fa13a680b573005.patch
+Patch6002: 950d36f8ba5a669cbc34a7972db611b675725fb5.patch
+Patch6003: 78e3d25a50537a842fd3b18eab971d63d5891350.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -98,6 +101,9 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* 20201129205849773219 patch-tracking 20190709-6
+- append patch file of upstream repository from <2583fb77dd57c5183998177a3fa13a680b573005> to <78e3d25a50537a842fd3b18eab971d63d5891350>
+
 * 20201103053007654140 patch-tracking 20190709-5
 - append patch file of upstream repository from <86ed08936d49e2c81ef49dfbd02aca1c74d0c098> to <86ed08936d49e2c81ef49dfbd02aca1c74d0c098>
 
