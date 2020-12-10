@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         4
+Release:         5
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -17,6 +17,7 @@ Patch0002:       0001-iputils-arpings.patch
 Patch0003:       0002-iputils-arpings-count.patch
 Patch0004:       bugfix-arping-w-does-not-take-effect.patch
 Patch0005:       0003-ninfod-change-variable-name-to-avoid-colliding.patch
+Patch0006:       bugfix-arpping-make-update-neighbours-work-again.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -43,6 +44,7 @@ cp %{SOURCE4} %{SOURCE5} .
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
+%patch0006 -p1
 
 %build
   export CFLAGS="-fpie"
@@ -97,6 +99,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Thu Dec 10 2020 lunankun <lunankun@huawei.com> - 20190709-5
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC: fix arping update neighbours
+
 * Tue Jul 07 2020 gaihuiying <gaihuiying1@huawei.com> - 20190709-4
 - Type:bugfix
 - Id:NA
