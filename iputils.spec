@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         7
+Release:         8
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -22,6 +22,7 @@ Patch6000: 86ed08936d49e2c81ef49dfbd02aca1c74d0c098.patch
 Patch6001: 2583fb77dd57c5183998177a3fa13a680b573005.patch
 Patch6002: 950d36f8ba5a669cbc34a7972db611b675725fb5.patch
 Patch6003: 78e3d25a50537a842fd3b18eab971d63d5891350.patch
+Patch6004: a7d510e44d978199b97e4a78ebf8057298af9602.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -103,6 +104,9 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* 20201228185849773189 patch-tracking 20190709-8
+- append patch file of upstream repository from <a7d510e44d978199b97e4a78ebf8057298af9602> to <a7d510e44d978199b97e4a78ebf8057298af9602>
+
 * Thu Dec 10 2020 lunankun <lunankun@huawei.com> - 20190709-7
 - Type:bugfix
 - Id:NA
