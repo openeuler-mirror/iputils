@@ -4,23 +4,23 @@ Date: Wed, 11 Mar 2020 17:52:29 +0800
 Subject: [PATCH] arping -w does not take effect
 
 ---
- arping.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arping.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/arping.c b/arping.c
-index 30884f6..8fadfcb 100644
+index a002786..36986e8 100644
 --- a/arping.c
 +++ b/arping.c
-@@ -686,7 +686,7 @@ static int event_loop(struct run_state *ctl)
- 		.it_value.tv_sec = ctl->interval,
+@@ -694,7 +694,7 @@ static int event_loop(struct run_state *ctl)
+ 		.it_value.tv_sec = ctl->timeout,
  		.it_value.tv_nsec = 0
  	};
 -	uint64_t exp, total_expires = 1;
 +	uint64_t exp, total_expires = 0;
  
  	unsigned char packet[4096];
- 	struct sockaddr_storage from = { 0 };
-@@ -759,13 +759,17 @@ static int event_loop(struct run_state *ctl)
+ 	struct sockaddr_storage from;
+@@ -781,12 +781,17 @@ static int event_loop(struct run_state *ctl)
  				break;
  			case POLLFD_TIMER:
  				s = read(tfd, &exp, sizeof(uint64_t));
@@ -33,14 +33,13 @@ index 30884f6..8fadfcb 100644
  					continue;
  				}
 -				total_expires += exp;
--				if ((0 < ctl->count && (uint64_t)ctl->count < total_expires) ||
--				    (ctl->quit_on_reply && ctl->timeout < total_expires)) {
+-				if (0 < ctl->count && (uint64_t)ctl->count < total_expires) {
 +				if ((ctl->count > 0 && (total_expires >=  (uint64_t)ctl->count)) ||
-+						(ctl->timeout > 0 && (total_expires * ctl->interval) > (uint64_t)ctl->timeout)||
-+						(ctl->quit_on_reply)) {
++					(ctl->timeout > 0 && (total_expires * ctl->interval) > (uint64_t)ctl->timeout)||
++					(ctl->quit_on_reply)) {
  					exit_loop = 1;
  					continue;
  				}
 -- 
-1.8.3.1
+2.27.0
 
