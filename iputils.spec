@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         6
+Release:         7
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -17,6 +17,7 @@ Patch100:        iputils-ifenslave.patch
 Patch6000:       0001-iputils-arpings.patch
 Patch6001:       0002-iputils-arpings-count.patch
 Patch6002:       bugfix-arpping-make-update-neighbours-work-again.patch
+Patch6003:       bugfix-rdisc-remove-PrivateUsers=yes-from-systemd-service-file.patch
 
 Patch9000:       bugfix-fix-ping-dead-loop.patch
 Patch9001:       bugfix-arping-w-does-not-take-effect.patch
@@ -46,6 +47,7 @@ cp %{SOURCE4} %{SOURCE5} .
 %patch6000 -p1
 %patch6001 -p1
 %patch6002 -p1
+%patch6003 -p1
 %patch9000 -p1
 %patch9001 -p1
 %patch9002 -p1
@@ -103,6 +105,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Mon May 17 2021 gaihuiying <gaihuiying1@huawei.com> - 20190709-7
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:sync 21.03 patch to fix rdisc service failed
+
 * Thu Dec 10 2020 lunankun <lunankun@huawei.com> - 20190709-6
 - Type:bugfix
 - Id:NA
