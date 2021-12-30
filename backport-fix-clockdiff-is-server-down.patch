@@ -1,0 +1,42 @@
+From 34b9bc30b24ea0557772c7c9153ab5065db762ea Mon Sep 17 00:00:00 2001
+From: root <root@localhost.localdomain>
+Date: Mon, 27 Dec 2021 20:27:43 +0800
+Subject: [PATCH] fix clockdiff is server down
+
+---
+ clockdiff.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/clockdiff.c b/clockdiff.c
+index 7836658..7fbb9dc 100644
+--- a/clockdiff.c
++++ b/clockdiff.c
+@@ -322,7 +322,7 @@ static int measure_inner_loop(struct run_state *ctl, struct measure_vars *mv)
+ 		if (diff < RANGE) {
+ 			mv->min1 = delta1;
+ 			mv->min2 = delta2;
+-			return BREAK;
++			return GOOD;
+ 		}
+ 	}
+ 	return CONTINUE;
+@@ -416,6 +416,8 @@ static int measure(struct run_state *ctl)
+ 				case BREAK:
+ 					escape = 1;
+ 					break;
++                                case GOOD:
++                                        goto good_exit;
+ 				case CONTINUE:
+ 					continue;
+ 				default:
+@@ -423,6 +425,7 @@ static int measure(struct run_state *ctl)
+ 			}
+ 		}
+ 	}
++good_exit:
+ 	ctl->measure_delta = (mv.min1 - mv.min2) / 2 + PROCESSING_TIME;
+ 	return GOOD;
+ }
+-- 
+2.27.0
+
