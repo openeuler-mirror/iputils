@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         7
+Release:         8
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -22,6 +22,7 @@ Patch6003:       bugfix-rdisc-remove-PrivateUsers=yes-from-systemd-service-file.
 Patch9000:       bugfix-fix-ping-dead-loop.patch
 Patch9001:       bugfix-arping-w-does-not-take-effect.patch
 Patch9002:       bugfix-fix-update-problem.patch
+Patch9003:       backport-fix-clockdiff-is-server-down.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd glibc-kernheaders gettext
@@ -51,6 +52,7 @@ cp %{SOURCE4} %{SOURCE5} .
 %patch9000 -p1
 %patch9001 -p1
 %patch9002 -p1
+%patch9003 -p1
 
 %build
   export CFLAGS="-fpie"
@@ -105,6 +107,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Thu Jan 20 2022 zengwefeng <zwfeng@huawei.com> - 20190709-8
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:sync patch to fix down while server is clockdiff
+
 * Mon May 17 2021 gaihuiying <gaihuiying1@huawei.com> - 20190709-7
 - Type:bugfix
 - Id:NA
