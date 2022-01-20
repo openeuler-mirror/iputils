@@ -2,11 +2,11 @@ From a38091c8eb0c515441080806975856ee09d2edc7 Mon Sep 17 00:00:00 2001
 From: Jan Macku <jamacku@redhat.com>
 Date: Tue, 23 Mar 2021 08:10:10 +0100
 Subject: [PATCH] ifenslave: fix CWE-170: Improper Null Termination
- 
+
 ---
  ifenslave.c | 24 ++++++++++++++++--------
  1 file changed, 16 insertions(+), 8 deletions(-)
- 
+
 diff --git a/ifenslave.c b/ifenslave.c
 index ddd82ec..1efe4f1 100644
 --- a/ifenslave.c
@@ -85,4 +85,3 @@ index ddd82ec..1efe4f1 100644
  	} else
 -- 
 2.29.2
-
