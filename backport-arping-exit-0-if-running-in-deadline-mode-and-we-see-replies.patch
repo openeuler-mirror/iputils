@@ -1,0 +1,60 @@
+From 854873bdd28fcdd9cc3fe0c2d29c083a07d07a86 Mon Sep 17 00:00:00 2001
+From: Noah Meyerhans <noahm@debian.org>
+Date: Wed, 16 Feb 2022 22:27:49 -0800
+Subject: [PATCH] arping: exit 0 if running in deadline mode and we see replies
+
+The arping behavior when running in deadline mode without a packet
+count (-w without -c) should match that of ping: any replies indicate
+that the host is up and should result in a zero (success) exit status.
+
+Fixes: https://github.com/iputils/iputils/issues/392
+Closes: https://github.com/iputils/iputils/pull/395
+
+Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
+Signed-off-by: Noah Meyerhans <noahm@debian.org>
+---
+ arping.c       |  2 ++
+ doc/arping.xml | 14 +++++++-------
+ 2 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/arping.c b/arping.c
+index efe3f53..c41ec74 100644
+--- a/arping.c
++++ b/arping.c
+@@ -822,6 +822,8 @@ static int event_loop(struct run_state *ctl)
+ 	else if (ctl->dad && ctl->quit_on_reply)
+ 		/* Duplicate address detection mode return value */
+ 		rc |= !(ctl->brd_sent != ctl->received);
++	else if (ctl->timeout && !(ctl->count > 0))
++		rc |= !(ctl->received > 0);
+ 	else
+ 		rc |= (ctl->sent != ctl->received);
+ 	return rc;
+diff --git a/doc/arping.xml b/doc/arping.xml
+index 711718f..9adbc0c 100644
+--- a/doc/arping.xml
++++ b/doc/arping.xml
+@@ -202,13 +202,13 @@ xml:id="man.arping">
+         <listitem>
+           <para>Specify a timeout, in seconds, before
+           <command>arping</command> exits regardless of how many
+-          packets have been sent or received. In this case
+-          <command>arping</command> does not stop after
+-          <emphasis remap='I'>count</emphasis> packet are sent, it
+-          waits either for
+-          <emphasis remap='I'>deadline</emphasis> expire or until
+-          <emphasis remap='I'>count</emphasis> probes are
+-          answered.</para>
++          packets have been sent or received.  If any replies are
++          received, exit with status 0, otherwise status 1.  When
++          combined with the <emphasis remap="I">count</emphasis>
++          option, exit with status 0 if <emphasis
++          remap="I">count</emphasis> replies are received before the
++          deadline expiration, otherwise status 1.
++	  </para>
+         </listitem>
+       </varlistentry>
+       <varlistentry>
+-- 
+2.27.0
+
