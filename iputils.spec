@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20210722
-Release:         1
+Release:         2
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -13,8 +13,9 @@ Source4:         bsd.txt
 Source5:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
 Patch0000:       iputils-ifenslave.patch
-Patch0001:       bugfix-arping-w-does-not-take-effect.patch
-Patch0002:       iputils-ifenslave-CWE-170.patch
+Patch0001:       iputils-ifenslave-CWE-170.patch
+Patch0002:       backport-arping-exit-0-if-running-in-deadline-mode-and-we-see-replies.patch
+Patch0003:       backport-arping-fix-typo-in-error-checking.patch 
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd iproute glibc-kernheaders gettext
@@ -113,6 +114,13 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Fri Feb 18 2021 xinghe <xinghe2@h-partners.com> - 20210722-2
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:fix arping -w command return error
+       remove old tar package
+
 * Tue Dec 07 2021 xihaochen <xihaochen@huawei.com> - 20210722-1
 - Type:requirements
 - ID:NA
