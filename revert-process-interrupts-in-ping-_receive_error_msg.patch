@@ -1,0 +1,46 @@
+From 6b94c384b8f5337fff2f3c3145d0239ff91618cd Mon Sep 17 00:00:00 2001
+From: eaglegai <eaglegai@163.com>
+Date: Sat, 5 Mar 2022 09:37:47 +0800
+Subject: [PATCH] revert process interrupts in ping*_receive_error_msg
+
+---
+ ping/ping.c         | 5 +----
+ ping/ping6_common.c | 5 +----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
+
+diff --git a/ping/ping.c b/ping/ping.c
+index 6fcb44f..7ec4836 100644
+--- a/ping/ping.c
++++ b/ping/ping.c
+@@ -1314,11 +1314,8 @@ int ping4_receive_error_msg(struct ping_rts *rts, socket_st *sock)
+ 	msg.msg_controllen = sizeof(cbuf);
+
+ 	res = recvmsg(sock->fd, &msg, MSG_ERRQUEUE | MSG_DONTWAIT);
+-	if (res < 0) {
+-		if (errno == EAGAIN || errno == EINTR)
+-			local_errors++;
++	if (res < 0)
+ 		goto out;
+-	}
+
+ 	e = NULL;
+ 	for (cmsgh = CMSG_FIRSTHDR(&msg); cmsgh; cmsgh = CMSG_NXTHDR(&msg, cmsgh)) {
+diff --git a/ping/ping6_common.c b/ping/ping6_common.c
+index 986210b..b0aa66b 100644
+--- a/ping/ping6_common.c
++++ b/ping/ping6_common.c
+@@ -482,11 +482,8 @@ int ping6_receive_error_msg(struct ping_rts *rts, socket_st *sock)
+ 	msg.msg_controllen = sizeof(cbuf);
+
+ 	res = recvmsg(sock->fd, &msg, MSG_ERRQUEUE | MSG_DONTWAIT);
+-	if (res < 0) {
+-		if (errno == EAGAIN || errno == EINTR)
+-			local_errors++;
++	if (res < 0)
+ 		goto out;
+-	}
+
+ 	e = NULL;
+ 	for (cmsg = CMSG_FIRSTHDR(&msg); cmsg; cmsg = CMSG_NXTHDR(&msg, cmsg)) {
+--
+2.33.0
