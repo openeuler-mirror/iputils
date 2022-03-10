@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20210722
-Release:         3
+Release:         4
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -17,6 +17,8 @@ Patch0001:       iputils-ifenslave-CWE-170.patch
 Patch0002:       backport-arping-exit-0-if-running-in-deadline-mode-and-we-see-replies.patch
 Patch0003:       backport-arping-fix-typo-in-error-checking.patch
 Patch0004:       revert-process-interrupts-in-ping-_receive_error_msg.patch
+Patch0005:       backport-ping-Print-reply-from-Subnet-Router-anycast-address.patch
+Patch0006:       backport-ping-Print-reply-with-wrong-source-with-warning.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd iproute glibc-kernheaders gettext
@@ -115,6 +117,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Thu Mar 10 2022 eaglegai <eaglegai@163.com> - 20210722-4
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:backport to fix no reply when ping6 from Subnet-Router anycast address
+
 * Sat Mar 05 2022 eaglegai <eaglegai@163.com> - 20210722-3
 - Type:bugfix
 - ID:NA
