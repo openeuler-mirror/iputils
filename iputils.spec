@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20210722
-Release:         2
+Release:         3
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -15,7 +15,10 @@ Source5:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 Patch0000:       iputils-ifenslave.patch
 Patch0001:       iputils-ifenslave-CWE-170.patch
 Patch0002:       backport-arping-exit-0-if-running-in-deadline-mode-and-we-see-replies.patch
-Patch0003:       backport-arping-fix-typo-in-error-checking.patch 
+Patch0003:       backport-arping-fix-typo-in-error-checking.patch
+Patch0004:       backport-fix-ARP-protocol-field-for-AX.25-and-NETROM.patch
+Patch0005:       backport-ping-Fix-ping6-binding-to-VRF-and-address.patch
+Patch0006:       backport-ping6-Avoid-binding-to-non-VRF.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd iproute glibc-kernheaders gettext
@@ -114,6 +117,14 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Tue Apr 26 2022 zengweifeng <zwfeng@huawei.com> - 20210722-3
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: fix ping2 bingding to VRF and address
+        Avoid binding to non-VRF
+        Fix ARP protocol field for AX.25 and NETROM
+
 * Fri Feb 18 2021 xinghe <xinghe2@h-partners.com> - 20210722-2
 - Type:bugfix
 - ID:NA
