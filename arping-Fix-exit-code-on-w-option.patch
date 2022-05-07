@@ -1,0 +1,24 @@
+From 4c2dd9f020df2749bdff294756b04aafa99ad624 Mon Sep 17 00:00:00 2001
+From: eaglegai <eaglegai@163.com>
+Date: Fri, 18 Mar 2022 19:32:21 +0800
+Subject: [PATCH] arping: Fix exit code on -w option when count * interval >
+ timeout
+
+Signed-off-by: eaglegai <eaglegai@163.com>
+---
+ arping.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arping.c b/arping.c
+index 20b0554b..fe79d2f8 100644
+--- a/arping.c
++++ b/arping.c
+@@ -850,7 +850,7 @@ static int event_loop(struct run_state *ctl)
+ 	else if (ctl->dad && ctl->quit_on_reply)
+ 		/* Duplicate address detection mode return value */
+ 		rc |= !(ctl->brd_sent != ctl->received);
+-	else if (ctl->timeout && !(ctl->count > 0))
++	else if (ctl->timeout && (!(ctl->count > 0) || (ctl->interval > ctl->timeout / ctl->count)))
+ 		rc |= !(ctl->received > 0);
+ 	else
+ 		rc |= (ctl->sent != ctl->received);

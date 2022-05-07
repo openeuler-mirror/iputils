@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20210722
-Release:         3
+Release:         4
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -19,6 +19,7 @@ Patch0003:       backport-arping-fix-typo-in-error-checking.patch
 Patch0004:       backport-fix-ARP-protocol-field-for-AX.25-and-NETROM.patch
 Patch0005:       backport-ping-Fix-ping6-binding-to-VRF-and-address.patch
 Patch0006:       backport-ping6-Avoid-binding-to-non-VRF.patch
+Patch0007:       arping-Fix-exit-code-on-w-option.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd iproute glibc-kernheaders gettext
@@ -117,6 +118,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Fri May 06 2022 eaglegai <eaglegai@163.com> - 20210722-4
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: fix exit code on -w option when count*interval > timeout
+
 * Tue Apr 26 2022 zengweifeng <zwfeng@huawei.com> - 20210722-3
 - Type:bugfix
 - ID:NA
