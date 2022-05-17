@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20190709
-Release:         7
+Release:         8
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -18,6 +18,9 @@ Patch6000:       0001-iputils-arpings.patch
 Patch6001:       0002-iputils-arpings-count.patch
 Patch6002:       bugfix-arpping-make-update-neighbours-work-again.patch
 Patch6003:       bugfix-rdisc-remove-PrivateUsers=yes-from-systemd-service-file.patch
+Patch6004:       backport-fix-ARP-protocol-field-for-AX.25-and-NETROM.patch
+Patch6005:       backport-ping-Fix-ping6-binding-to-VRF-and-address.patch
+Patch6006:       backport-ping6-Avoid-binding-to-non-VRF.patch
 
 Patch9000:       bugfix-fix-ping-dead-loop.patch
 Patch9001:       bugfix-arping-w-does-not-take-effect.patch
@@ -48,6 +51,9 @@ cp %{SOURCE4} %{SOURCE5} .
 %patch6001 -p1
 %patch6002 -p1
 %patch6003 -p1
+%patch6004 -p1
+%patch6005 -p1
+%patch6006 -p1
 %patch9000 -p1
 %patch9001 -p1
 %patch9002 -p1
@@ -105,6 +111,14 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
 
 %changelog
+* Sat May 14 2022 yanglu <yanglu72@h-partners.com> - 20190709-8
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:fix ping6 bingding to VRF and address
+       Avoid binding to non-VRF
+       Fix ARP protocol field for AX.25 and NETROM
+
 * Mon May 17 2021 gaihuiying <gaihuiying1@huawei.com> - 20190709-7
 - Type:bugfix
 - Id:NA
