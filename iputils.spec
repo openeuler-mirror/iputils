@@ -140,7 +140,7 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
         Avoid binding to non-VRF
         Fix ARP protocol field for AX.25 and NETROM
 
-* Fri Feb 18 2021 xinghe <xinghe2@h-partners.com> - 20210722-2
+* Fri Feb 18 2022 xinghe <xinghe2@h-partners.com> - 20210722-2
 - Type:bugfix
 - ID:NA
 - SUG:NA
@@ -171,10 +171,10 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 - SUG:NA
 - DESC: fix arping update neighbours
 
-* 20201129205849773219 patch-tracking 20190709-6
+* Sun Nov 29 2020 openEuler Buildteam <buildteam@openeuler.org> - 20190709-6
 - append patch file of upstream repository from <2583fb77dd57c5183998177a3fa13a680b573005> to <78e3d25a50537a842fd3b18eab971d63d5891350>
 
-* 20201103053007654140 patch-tracking 20190709-5
+* Tue Nov 3 2020 openEuler Buildteam <buildteam@openeuler.org> - 20190709-5
 - append patch file of upstream repository from <86ed08936d49e2c81ef49dfbd02aca1c74d0c098> to <86ed08936d49e2c81ef49dfbd02aca1c74d0c098>
 
 * Tue Jul 07 2020 gaihuiying <gaihuiying1@huawei.com> - 20190709-4
