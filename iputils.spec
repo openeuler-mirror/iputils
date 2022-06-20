@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20210722
-Release:         5
+Release:         6
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -22,6 +22,7 @@ Patch0006:       backport-ping6-Avoid-binding-to-non-VRF.patch
 Patch0007:       arping-Fix-exit-code-on-w-option.patch
 Patch0008:       backport-ping-Print-reply-from-Subnet-Router-anycast-address.patch
 Patch0009:       backport-ping-Print-reply-with-wrong-source-with-warning.patch
+Patch0010:       backport-ping-Fix-potential-memory-leakage.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd iproute glibc-kernheaders gettext
@@ -120,6 +121,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Mon Jun 20 2022 lvgenggeng <lvgenggeng@uniontech.com> - 20210722-6
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:backport to fix potential memory leakage on -p option
+
 * Sat May 07 2022 eaglegai <eaglegai@163.com> - 20210722-5
 - Type:bugfix
 - ID:NA
