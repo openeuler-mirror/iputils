@@ -1,11 +1,11 @@
 Name:            iputils
-Version:         20210722
-Release:         6
+Version:         20211215
+Release:         1
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
 
-Source0:         https://github.com/iputils/iputils/archive/s%{version}.tar.gz#/%{name}-s%{version}.tar.gz
+Source0:         https://github.com/iputils/iputils/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:         ifenslave.tar.gz
 Source2:         rdisc.service
 Source3:         ninfod.service
@@ -14,15 +14,6 @@ Source5:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
 Patch0000:       iputils-ifenslave.patch
 Patch0001:       iputils-ifenslave-CWE-170.patch
-Patch0002:       backport-arping-exit-0-if-running-in-deadline-mode-and-we-see-replies.patch
-Patch0003:       backport-arping-fix-typo-in-error-checking.patch
-Patch0004:       backport-fix-ARP-protocol-field-for-AX.25-and-NETROM.patch
-Patch0005:       backport-ping-Fix-ping6-binding-to-VRF-and-address.patch
-Patch0006:       backport-ping6-Avoid-binding-to-non-VRF.patch
-Patch0007:       arping-Fix-exit-code-on-w-option.patch
-Patch0008:       backport-ping-Print-reply-from-Subnet-Router-anycast-address.patch
-Patch0009:       backport-ping-Print-reply-with-wrong-source-with-warning.patch
-Patch0010:       backport-ping-Fix-potential-memory-leakage.patch
 
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd iproute glibc-kernheaders gettext
@@ -56,7 +47,7 @@ cp %{SOURCE4} %{SOURCE5} .
   export CFLAGS="-fpie"
   export LDFLAGS="-pie -Wl,-z,relro,-z,now"
 
-%meson -DBUILD_TFTPD=false
+%meson
 %meson_build
 gcc -Wall $RPM_OPT_FLAGS $CFLAGS $RPM_LD_FLAGS $LDFLAGS ifenslave.c -o ifenslave
 
@@ -121,6 +112,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Mon Jul 11 2022 yinyongkang <yinyongkang@kylinos.cn> - 20211215-1
+- Type:requirements
+- ID:NA
+- SUG:NA
+- DESC: update iputils to 20211215
+
 * Mon Jun 20 2022 lvgenggeng <lvgenggeng@uniontech.com> - 20210722-6
 - Type:bugfix
 - ID:NA
