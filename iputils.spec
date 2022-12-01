@@ -1,11 +1,11 @@
 Name:            iputils
 Version:         20210722
-Release:         6
+Release:         7
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
 
-Source0:         https://github.com/iputils/iputils/archive/s%{version}.tar.gz#/%{name}-s%{version}.tar.gz
+Source0:         https://github.com/iputils/iputils/archive/refs/tags/%{version}.tar.gz#/%{name}-s%{version}.tar.gz
 Source1:         ifenslave.tar.gz
 Source2:         rdisc.service
 Source3:         ninfod.service
@@ -122,6 +122,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Thu Dec 01 2022 zhongxuan <zhongxuan2@huawei.com> - 20210722-7
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: update Source0
+
 * Fri May 06 2022 eaglegai <eaglegai@163.com> - 20210722-6
 - Type:bugfix
 - ID:NA
