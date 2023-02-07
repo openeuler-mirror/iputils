@@ -1,5 +1,5 @@
 Name:            iputils
-Version:         20211215
+Version:         20221126
 Release:         1
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
@@ -7,10 +7,8 @@ URL:             https://github.com/iputils/iputils
 
 Source0:         https://github.com/iputils/iputils/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:         ifenslave.tar.gz
-Source2:         rdisc.service
-Source3:         ninfod.service
-Source4:         bsd.txt
-Source5:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+Source2:         bsd.txt
+Source3:         https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
 Patch0000:       iputils-ifenslave.patch
 Patch0001:       iputils-ifenslave-CWE-170.patch
@@ -18,7 +16,7 @@ Patch0001:       iputils-ifenslave-CWE-170.patch
 BuildRequires:   gcc meson libidn2-devel openssl-devel libcap-devel libxslt
 BuildRequires:   docbook5-style-xsl systemd iproute glibc-kernheaders gettext
 %{?systemd_ordering}
-Provides:        /bin/ping /bin/ping6 /sbin/arping /sbin/rdisc
+Provides:        /bin/ping /bin/ping6 /sbin/arping
 
 %description
 The iputils package contains basic utilities for monitoring a network,
@@ -28,18 +26,9 @@ the target machine is alive and receiving network traffic.
 
 %package_help
 
-%package ninfod
-Summary: Node Information Query Daemon
-Requires: %{name} = %{version}-%{release}
-Provides: %{_sbindir}/ninfod
- 
-%description ninfod
-Node Information Query (RFC4620) daemon. Responds to IPv6 Node Information
-Queries.
-
 %prep
 %setup -q -a 1 -n %{name}-%{version}
-cp %{SOURCE4} %{SOURCE5} .
+cp %{SOURCE2} %{SOURCE3} .
 
 %autopatch -p1
 
@@ -55,6 +44,7 @@ gcc -Wall $RPM_OPT_FLAGS $CFLAGS $RPM_LD_FLAGS $LDFLAGS ifenslave.c -o ifenslave
 %meson_install
 
 mkdir -p ${RPM_BUILD_ROOT}%{_bindir}
+mkdir -p ${RPM_BUILD_ROOT}%{_sbindir}
 ln -sf ../bin/ping ${RPM_BUILD_ROOT}%{_sbindir}/ping
 ln -sf ../bin/ping ${RPM_BUILD_ROOT}%{_sbindir}/ping6
 ln -sf ../bin/tracepath ${RPM_BUILD_ROOT}%{_sbindir}/tracepath
@@ -66,22 +56,10 @@ install -cp ifenslave ${RPM_BUILD_ROOT}%{_sbindir}/
 install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 
 %post
-%systemd_post rdisc.service
 
 %preun
-%systemd_preun rdisc.service
 
 %postun
-%systemd_postun_with_restart rdisc.service
-
-%post ninfod
-%systemd_post ninfod.service
-
-%preun ninfod
-%systemd_preun ninfod.service
-
-%postun ninfod
-%systemd_postun_with_restart ninfod.service
 
 %files
 %defattr(-,root,root)
@@ -89,10 +67,8 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %attr(0755,root,root) %caps(cap_net_raw=p) %{_bindir}/clockdiff
 %attr(0755,root,root) %caps(cap_net_raw=p) %{_bindir}/arping
 %attr(0755,root,root) %caps(cap_net_raw=p cap_net_admin=p) %{_bindir}/ping
-%attr(0755,root,root) %caps(cap_net_raw=ep) %{_sbindir}/ninfod
 %{_datadir}/locale/*
 %{_sbindir}/ifenslave
-%{_sbindir}/rdisc
 %{_bindir}/tracepath
 %{_sbindir}/ping
 %{_sbindir}/ping6
@@ -100,18 +76,19 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_sbindir}/tracepath6
 %{_sbindir}/arping
 %{_bindir}/tracepath
-%{_unitdir}/rdisc.service
 
 %files help
 %defattr(-,root,root)
 %doc README.bonding
 %{_mandir}/man8/*.8.gz
  
-%files ninfod
-%attr(0755,root,root) %caps(cap_net_raw=ep) %{_sbindir}/ninfod
-%{_unitdir}/ninfod.service
-
 %changelog
+* Mon Feb 6 2023 zhongxuan <zhongxuan2@huawei.com> - 20221126-1
+- Type:requirements
+- ID:NA
+- SUG:NA
+- DESC: update iputils to 20221126
+
 * Mon Jul 11 2022 yinyongkang <yinyongkang@kylinos.cn> - 20211215-1
 - Type:requirements
 - ID:NA
