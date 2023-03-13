@@ -1,6 +1,7 @@
+#needsrootforbuild
 Name:            iputils
 Version:         20210722
-Release:         6
+Release:         7
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -93,6 +94,9 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %postun ninfod
 %systemd_postun_with_restart ninfod.service
 
+%check
+%meson_test
+
 %files
 %defattr(-,root,root)
 %license bsd.txt gpl-2.0.txt LICENSE
@@ -122,6 +126,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_unitdir}/ninfod.service
 
 %changelog
+* Mon Mar 13 2023 eaglegai <eaglegai@163.com> - 20210722-7
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: enable test
+
 * Fri May 06 2022 eaglegai <eaglegai@163.com> - 20210722-6
 - Type:bugfix
 - ID:NA
