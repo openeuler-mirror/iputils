@@ -1,6 +1,6 @@
 Name:            iputils
 Version:         20221126
-Release:         1
+Release:         2
 Summary:         Network monitoring tools including ping
 License:         BSD and GPLv2+
 URL:             https://github.com/iputils/iputils
@@ -33,12 +33,11 @@ cp %{SOURCE2} %{SOURCE3} .
 %autopatch -p1
 
 %build
-  export CFLAGS="-fpie"
-  export LDFLAGS="-pie -Wl,-z,relro,-z,now"
+export LDFLAGS="-Wl,-z,relro,-z,now"
 
-%meson
+%meson -Db_pie=true
 %meson_build
-gcc -Wall $RPM_OPT_FLAGS $CFLAGS $RPM_LD_FLAGS $LDFLAGS ifenslave.c -o ifenslave
+gcc -Wall -fpie $RPM_OPT_FLAGS $CFLAGS $RPM_LD_FLAGS $LDFLAGS ifenslave.c -o ifenslave
 
 %install
 %meson_install
@@ -83,6 +82,12 @@ install -cp ifenslave.8 ${RPM_BUILD_ROOT}%{_mandir}/man8/
 %{_mandir}/man8/*.8.gz
  
 %changelog
+* Tue Apr 18 2023 zhongxuan <zhongxuan2@huawei.com> - 20221126-2
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: fix build of debugsource
+
 * Mon Feb 6 2023 zhongxuan <zhongxuan2@huawei.com> - 20221126-1
 - Type:requirements
 - ID:NA
